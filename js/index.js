@@ -1,35 +1,50 @@
-let endGame = true;
+let WORD_COUNT = 50;
+let isEndGame = true;
 let wordList = [];
-let limitTime = 20;
+let LIMIT_TIME = 3;
 
 const wordCount = document.querySelector('.word-count');
 const word = document.querySelector('.word');
 const time = document.querySelector('.time');
 const wordInput = document.querySelector('.word-input');
+const resetButton = document.querySelector('.reset-button');
+
+resetButton.value = btnValue();
 
 function fetchData(){
-    axios.get('https://random-word-api.herokuapp.com/word?number=50')
+    axios.get(`https://random-word-api.herokuapp.com/word?number=${WORD_COUNT}`)
     .then((response) => {
         wordList = response.data;
-        wordCount.textContent = wordList.length;
+        wordCount.textContent = WORD_COUNT;
         word.textContent = wordList[0];
-        
-        // 매우느림 ! 
+        // 로딩 
     })
 }
 fetchData();
 
 
 const timer = setInterval(() => {
-    console.log(limitTime);
-    if(limitTime <= 0){
+    if(LIMIT_TIME <= 0){
         clearInterval(timer);
+        endGame();
+        word.textContent = "Game Over";
+        time.textContent = `Time's Up!`;
     }
-    if(limitTime > 0){
-        limitTime -= 1;
-        time.textContent = `${limitTime}초`
+    if(LIMIT_TIME > 0){
+        time.textContent = `${LIMIT_TIME}초`
+        LIMIT_TIME -= 1;
     }
 }, 1000);
+
+
+function endGame(){
+    isEndGame = true;
+    
+}
+
+function startGame(){
+    isEndGame = false;
+}
 
 
 wordInput.addEventListener('keyup', (e) => handleInputWord(e));
@@ -37,4 +52,9 @@ function handleInputWord(e){
     if(e.key === 'Enter'){
         
     }
+}
+
+/* 게임 시작 & 리셋 버튼 */
+function btnValue(){
+    return isEndGame ? "Start" : 'Reset';
 }
