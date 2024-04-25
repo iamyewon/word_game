@@ -3,9 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Word Game</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+    <script src="js/index.js" defer></script>
 </head>
 <body>
-    
+    <div class="container">
+        <div class="game-info">
+            <button class="reset-button">Reset</button>
+            <!-- <input type="button" value=> -->
+            <span class="word-count"></span>
+        </div>
+        <div class="word-container">
+            <p class="word-title">제시어</p>
+            <div class="word-box">
+                <span class="word"></span>
+            </div>
+        </div>
+        <div class="game-timer">
+            <p class="timer-title">남은시간</p>
+            <div class="timer">
+                <div class="time"></div>
+            </div>
+        </div>
+        <div class="word-input-container">
+            <p class="input-title">입력란</p>
+            <input class="word-input" type="text" value="">
+        </div>
+        <div class="word-result">
+            <div class="correct-word-box">
+                <div class="correct-word-title">
+                    <span>정답 </span>
+                    <span>(1)</span>
+                </div>
+                <div class="correct-word-list">
+                    <img src="img/circle-mark.png" alt="circle-mark">
+                    <p>사과</p>
+                </div>
+            </div>
+            <div class="incorrect-word-box">
+                <div class="incorrect-word-title">
+                    <span>오답 </span>
+                    <span>(1)</span>
+                </div>
+                <div class="incorrect-word-list">
+                    <img src="img/cross-mark.png" alt="circle-mark">
+                    <p>폴도</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
