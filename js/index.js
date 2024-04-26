@@ -1,15 +1,21 @@
 let WORD_COUNT = 50;
 let isEndGame = true;
 let wordList = [];
-let LIMIT_TIME = 3;
+let limitTime = 20;
+let correctWordList = [];
+let incorrectWordList = [];
 
 const wordCount = document.querySelector('.word-count');
 const word = document.querySelector('.word');
 const time = document.querySelector('.time');
 const wordInput = document.querySelector('.word-input');
+const wordTitle = document.querySelector('.word-title');
+const correctWords = document.querySelector('.correct-words');
+const correctCount = document.querySelector('.correct-count');
+const incorrectWords = document.querySelector('.incorrect-words');
+const incorrectCount = document.querySelector('.incorrect-count');
 const resetButton = document.querySelector('.reset-button');
-
-resetButton.value = btnValue();
+resetButton.value = setBtnValue();
 
 function fetchData(){
     axios.get(`https://random-word-api.herokuapp.com/word?number=${WORD_COUNT}`)
@@ -18,43 +24,96 @@ function fetchData(){
         wordCount.textContent = WORD_COUNT;
         word.textContent = wordList[0];
         // 로딩 
-    })
+    }).catch(() => console.error());
 }
-fetchData();
 
-
-const timer = setInterval(() => {
-    if(LIMIT_TIME <= 0){
-        clearInterval(timer);
-        endGame();
-        word.textContent = "Game Over";
-        time.textContent = `Time's Up!`;
-    }
-    if(LIMIT_TIME > 0){
-        time.textContent = `${LIMIT_TIME}초`
-        LIMIT_TIME -= 1;
-    }
-}, 1000);
+function handleTimer(){
+    const timer = setInterval(() => {
+        if(limitTime <= 0){
+            clearInterval(timer);
+            endGame();
+        }
+        if(limitTime > 0){
+            time.textContent = `${limitTime}초`
+            limitTime -= 1;
+        }
+    }, 1000);
+}
 
 
 function endGame(){
+    limitTime = 0;
+    // wordTitle.style.visibility = 'hidden';
+    wordTitle.textContent = "";
+    word.textContent = "Game Over!";
+    time.textContent = `Time's Up!`;
     isEndGame = true;
-    
+    resetButton.value = setBtnValue();
+    wordInput.value = "";
+    wordInput.disabled = true;
 }
+
 
 function startGame(){
-    isEndGame = false;
+    correctWords.textContent = '';
+    correctWordList = [];
+    incorrectWords.textContent = '';
+    incorrectWordList = [];
+    limitTime = 20;
+    fetchData(); // 여기도 텀이 생기는데 그냥 원래 받아온 값으로 랜덤돌려줘야할지. 
+    wordTitle.textContent = "제시어";
+    wordInput.disabled = false;
 }
 
 
+
+// TODO : resetGame 따로 만들어서 
+//        리셋 버튼 눌렀을 때 / 시간이 다 되었을 때 구분해주면 좋을듯 
+
+resetButton.addEventListener("click", () => {
+    isEndGame = !isEndGame;
+    resetButton.value = setBtnValue();
+ 
+    if(isEndGame){
+        endGame();
+        wordList = [];
+
+    }else{
+        startGame();
+        handleTimer();
+    }
+})
+
+
+// TODO : 단어 맞췄을 때 filter 써서 리스트에서 빼주기 
+
+function handleCorrectWord(correctWord){
+    wordList = wordList.filter((value) => value !== correctWord);
+}
+
 wordInput.addEventListener('keyup', (e) => handleInputWord(e));
+
 function handleInputWord(e){
     if(e.key === 'Enter'){
-        
+        if(word.textContent === wordInput.value.trim()){
+            correctWordList.push(word.textContent);
+            correctWords.textContent += `${word.textContent} `;
+            correctCount.textContent = `(${correctWordList.length})`;
+            handleCorrectWord(word.textContent);
+            word.textContent = wordList[0];
+        }else{
+            incorrectWordList.push(word.textContent);
+            incorrectWords.textContent += `${wordInput.value.trim()} `;
+            incorrectCount.textContent = `(${incorrectWordList.length})`;
+        }
+        wordInput.value = "";
     }
 }
 
+
+
 /* 게임 시작 & 리셋 버튼 */
-function btnValue(){
+function setBtnValue(){
     return isEndGame ? "Start" : 'Reset';
 }
+
