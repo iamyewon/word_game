@@ -196,3 +196,31 @@ body{
     position: relative;
     overflow-y: auto;
 }
+
+
+.loading-background{
+    /* display: none; */
+    background-color: #66666670;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
+
+/* loading */
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  @keyframes spin {
+    0% { translate: (-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
