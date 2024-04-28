@@ -1,14 +1,15 @@
 let WORD_COUNT = 50;
 let isEndGame = true;
 let wordList = [];
-let limitTime = 20;
 let correctWordList = [];
 let incorrectWordList = [];
-let isLoading = false;
+const LIMIT_TIME = 20;
 
 const wordCount = document.querySelector('.word-count');
 const word = document.querySelector('.word');
+const wordBox = document.querySelector('.word-box');
 const time = document.querySelector('.time');
+const timerBox = document.querySelector('.timer');
 const wordInput = document.querySelector('.word-input');
 const wordTitle = document.querySelector('.word-title');
 const correctWords = document.querySelector('.correct-words');
@@ -16,92 +17,103 @@ const correctCount = document.querySelector('.correct-count');
 const incorrectWords = document.querySelector('.incorrect-words');
 const incorrectCount = document.querySelector('.incorrect-count');
 const resetButton = document.querySelector('.reset-button');
-resetButton.value = setBtnValue();
 const loadingBackground = document.querySelector('.loading-background');
 const loader = document.querySelector('.loader');
 
-// TODO : loading
-loadingBackground.style.display = isLoading ? 'block' : 'none';
-loader.style.display = isLoading ? 'block' : 'none';
+
+resetButton.value = setBtnValue();
+wordInput.addEventListener('keyup', (e) => handleInputWord(e));
 
 
 function fetchData(){
+    displayLoading();
     axios.get(`https://random-word-api.herokuapp.com/word?number=${WORD_COUNT}`)
     .then((response) => {
         wordList = response.data;
         wordCount.textContent = WORD_COUNT;
         word.textContent = wordList[0];
-        isLoading = false;
-    }).catch(() => console.error());
+        handleTimer();
+        hideLoading();
+    }).catch(console.error);
 }
 
+let timer;
 function handleTimer(){
-    const timer = setInterval(() => {
+    let limitTime = LIMIT_TIME;
+    time.textContent = `${limitTime}초`
+    timer = setInterval(() => {
         if(limitTime <= 0){
             clearInterval(timer);
             endGame();
         }
         if(limitTime > 0){
-            time.textContent = `${limitTime}초`
             limitTime -= 1;
+            time.textContent = `${limitTime}초`
+            if(0 < limitTime && limitTime <= 5){
+                console.log(limitTime);
+                timerBox.classList.add('imminent-time');
+            }
         }
     }, 1000);
 }
 
 
 function endGame(){
-    limitTime = 0;
-    // wordTitle.style.visibility = 'hidden';
+    clearInterval(timer);
+    timerBox.classList.remove('imminent-time');
     wordTitle.textContent = "";
     word.textContent = "Game Over";
     time.textContent = `Time's Up!`;
     isEndGame = true;
     resetButton.value = setBtnValue();
     wordInput.value = "";
+    wordList = [];
     wordInput.disabled = true;
+    wordBox.classList.add('transparent');
 }
 
-
-function startGame(){
-    isLoading = true;
+function resetGame(){
+    clearInterval(timer);
+    timerBox.classList.remove('imminent-time');
+    word.textContent = "Word Game";
+    time.textContent = '';
+    isEndGame = true;
+    resetButton.value = setBtnValue();
+    wordInput.value = "";
+    wordList = [];
+    wordInput.disabled = true;
     correctWords.textContent = '';
     correctWordList = [];
     incorrectWords.textContent = '';
     incorrectWordList = [];
-    limitTime = 20;
-    fetchData(); // 여기도 텀이 생기는데 그냥 원래 받아온 값으로 랜덤돌려줘야할지. 
+    wordCount.textContent = '';
+}
+
+function startGame(){
+    correctWords.textContent = '';
+    correctWordList = [];
+    incorrectWords.textContent = '';
+    incorrectWordList = [];
+    fetchData();
     wordTitle.textContent = "제시어";
     wordInput.disabled = false;
     correctCount.textContent = '';
     incorrectCount.textContent = '';
+    isEndGame = false;
 }
 
 
 
-// TODO : resetGame 따로 만들어서 
-//        리셋 버튼 눌렀을 때 / 시간이 다 되었을 때 구분해주면 좋을듯 
-
 resetButton.addEventListener("click", () => {
-    isEndGame = !isEndGame;
+    isEndGame ? startGame() : resetGame();
     resetButton.value = setBtnValue();
- 
-    if(isEndGame){
-        endGame();
-        wordList = [];
-
-    }else{
-        startGame();
-        handleTimer();
-    }
 })
 
 
-// TODO : filter ,, ?
 function handleCorrectWord(correctWord){
     wordList = wordList.filter((value) => value !== correctWord);
 }
 
-wordInput.addEventListener('keyup', (e) => handleInputWord(e));
 
 function handleInputWord(e){
     if(e.key === 'Enter'){
@@ -128,3 +140,10 @@ function setBtnValue(){
     return isEndGame ? "Start" : 'Reset';
 }
 
+function displayLoading() {
+    loadingBackground.classList.add('show');
+}
+
+function hideLoading() {
+    loadingBackground.classList.remove('show');
+}

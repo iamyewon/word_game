@@ -87,6 +87,10 @@ body{
     align-items: center;
 }
 
+.transparent{
+    background-color: transparent;
+}
+
 .word{
     font-size: 64px;
 }
@@ -110,6 +114,10 @@ body{
     text-align: center;
     display: flex;
     align-items: center;
+}
+
+.imminent-time{
+    border-color: red;
 }
 
 .time{
@@ -199,7 +207,7 @@ body{
 
 
 .loading-background{
-    /* display: none; */
+    display: none;
     background-color: #66666670;
     width: 100vw;
     height: 100vh;
@@ -224,3 +232,7 @@ body{
     0% { translate: (-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
   }
+
+.show{
+    display: block;
+}
