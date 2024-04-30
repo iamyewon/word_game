@@ -1,43 +1,57 @@
 function endGame(){
-    clearInterval(timer);
-    timerBox.classList.remove('imminent-time');
-    wordTitle.textContent = "";
-    word.textContent = "Game Over";
-    time.textContent = `Time's Up!`;
-    isEndGame = true;
-    resetButton.value = setBtnValue();
-    wordInput.value = "";
-    wordList = [];
-    wordInput.disabled = true;
+    clearTimer();
+    handleBasicSetting('', 'Game Over', `Time's Up!`, '', true);
+    handleEndGame(true);
+    setWordList([]);
     wordBox.classList.add('transparent');
 }
 
 function resetGame(){
-    clearInterval(timer);
-    timerBox.classList.remove('imminent-time');
-    word.textContent = "Word Game";
-    time.textContent = '';
-    isEndGame = true;
-    resetButton.value = setBtnValue();
-    wordInput.value = "";
-    wordList = [];
-    wordInput.disabled = true;
-    correctWords.textContent = '';
-    correctWordList = [];
-    incorrectWords.textContent = '';
-    incorrectWordList = [];
-    wordCount.textContent = '';
+    clearTimer();
+    handleBasicSetting('', 'Word Game', '', '', true);
+    handleEndGame(true);
+    handleWordList([], '', [], '', []);
+    handelCount('', '', '');
+    // wordBox.classList.add('transparent');
 }
 
 function startGame(){
-    correctWords.textContent = '';
-    correctWordList = [];
-    incorrectWords.textContent = '';
-    incorrectWordList = [];
+    handleBasicSetting('제시어', null, null, null, false);
+    handleWordList(null, '', [], '', []);
     fetchData();
-    wordTitle.textContent = "제시어";
-    wordInput.disabled = false;
-    correctCount.textContent = '';
-    incorrectCount.textContent = '';
+    handelCount(null, '', '');
     isEndGame = false;
+    wordBox.classList.remove('transparent');
+}
+
+function handleEndGame(isEndGameValue){
+    isEndGame = isEndGameValue;
+    resetButton.value = setBtnValue();
+}
+
+function clearTimer(){
+    timerBox.classList.remove('imminent-time');
+    clearInterval(timer);
+}
+
+function handleBasicSetting(wordTitleValue, wordValue, timeValue, wordInputValue, isDisabledWordInput){
+    if(wordTitleValue !== null) setWordTitle(wordTitleValue);
+    if(wordValue !== null) setWord(wordValue);
+    if(timeValue !== null) setTime(timeValue);
+    if(wordInputValue !== null) setWordInput(wordInputValue);
+    if(isDisabledWordInput !== null) setWordInputDisabled(isDisabledWordInput);
+}
+
+function handleWordList(wordListValue, correctWordsValue, correctWordListValue, incorrectWordsValue, incorrectWordListValue){
+    if(wordListValue !== null) setWordList(wordListValue);
+    if(correctWordsValue !== null) setCorrectWords(correctWordsValue);
+    if(correctWordListValue !== null) setCorrectWordList(correctWordListValue);
+    if(incorrectWordsValue !== null) setIncorrectWords(incorrectWordsValue);
+    if(incorrectWordListValue !== null) setIncorrectWordList(incorrectWordListValue);
+}
+
+function handelCount(wordCountValue, correctCountValue, incorrectCountValue){
+    if(wordCountValue !== null) setWordCount(wordCountValue);
+    if(correctCountValue !== null) setCorrectWordCount(correctCountValue);
+    if(incorrectCountValue !== null) setIncorrectWordCount(incorrectCountValue);
 }

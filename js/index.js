@@ -20,6 +20,61 @@ const resetButton = document.querySelector('.reset-button');
 const loadingBackground = document.querySelector('.loading-background');
 const loader = document.querySelector('.loader');
 
+
+function setWordTitle(wordTitleValue){
+    wordTitle.textContent = wordTitleValue;
+}
+
+function setWord(wordValue){
+    word.textContent = wordValue;
+}
+
+function setTime(timeValue){
+    time.textContent = timeValue;
+}
+
+function setWordInput(wordInputValue){
+    wordInput.value = wordInputValue;
+}
+
+function setWordInputDisabled(isDisabledWordInput){
+    wordInput.disabled = isDisabledWordInput;
+}
+
+function setWordList(wordListValue){
+    wordList = wordListValue;
+}
+
+function setCorrectWords(correctWordsValue){
+    correctWords.textContent = correctWordsValue;
+}
+
+function setCorrectWordList(correctWordListValue){
+    correctWordList = correctWordListValue;
+}
+
+function setIncorrectWords(incorrectWordsValue){
+    incorrectWords.textContent = incorrectWordsValue;
+}
+
+function setIncorrectWordList(incorrectWordListValue){
+    incorrectWordList = incorrectWordListValue;
+}
+
+function setWordCount(wordCountValue){
+    wordCount.textContent = wordCountValue;
+}
+
+function setCorrectWordCount(correctCountValue){
+    correctCount.textContent = correctCountValue;
+}
+
+function setIncorrectWordCount(incorrectCountValue){
+    incorrectCount.textContent = incorrectCountValue;
+}
+
+
+// 실행은 main.js로 ?
 resetButton.value = setBtnValue();
 
 wordInput.addEventListener('keyup', (e) => handleInputWord(e));

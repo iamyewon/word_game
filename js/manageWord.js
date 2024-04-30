@@ -2,6 +2,7 @@ function handleInputWord(e){
     if(e.key === 'Enter'){
         if(word.textContent === wordInput.value.trim()){
             correctWordList.push(word.textContent);
+            // setCorrectWords(correctwords.textContent + `${word.textContent}  `);
             correctWords.textContent += `${word.textContent}  `;
             correctCount.textContent = `(${correctWordList.length})`;
             handleCorrectWord(word.textContent);
@@ -15,6 +16,7 @@ function handleInputWord(e){
         wordInput.value = "";
     }
 }
+
 
 function handleCorrectWord(correctWord){
     wordList = wordList.filter((value) => value !== correctWord);
