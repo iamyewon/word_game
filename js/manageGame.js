@@ -1,30 +1,36 @@
 function endGame(){
     clearTimer();
     handleBasicSetting('', 'Game Over', `Time's Up!`, '', true);
-    handleEndGame(true);
-    setWordList([]);
+    setEndGame(true);
     wordBox.classList.add('transparent');
 }
 
 function resetGame(){
     clearTimer();
     handleBasicSetting('', 'Word Game', '', '', true);
-    handleEndGame(true);
-    handleWordList([], '', [], '', []);
-    handelCount('', '', '');
-    // wordBox.classList.add('transparent');
+    resetList();
+    resetCount();
+    setEndGame(true);
 }
 
-function startGame(){
+async function startGame(){
+    resetList();
     handleBasicSetting('제시어', null, null, null, false);
-    handleWordList(null, '', [], '', []);
-    fetchData();
-    handelCount(null, '', '');
-    isEndGame = false;
+    resetCount();
+    
+    const result = await fetchData();
+    if(!result){
+        return;
+    }
+    setWordList(result.data);
+    setWordCount(WORD_COUNT);
+    setWord(wordList[0]);
+    handleTimer();    
+    setEndGame(false);
     wordBox.classList.remove('transparent');
 }
 
-function handleEndGame(isEndGameValue){
+function setEndGame(isEndGameValue){
     isEndGame = isEndGameValue;
     resetButton.value = setBtnValue();
 }
@@ -32,6 +38,15 @@ function handleEndGame(isEndGameValue){
 function clearTimer(){
     timerBox.classList.remove('imminent-time');
     clearInterval(timer);
+}
+
+
+function resetList(){
+    setWordList([]);
+    setCorrectWords('');
+    setCorrectWordList([]);
+    setIncorrectWords('');
+    setIncorrectWordList([]);
 }
 
 function handleBasicSetting(wordTitleValue, wordValue, timeValue, wordInputValue, isDisabledWordInput){
@@ -42,16 +57,8 @@ function handleBasicSetting(wordTitleValue, wordValue, timeValue, wordInputValue
     if(isDisabledWordInput !== null) setWordInputDisabled(isDisabledWordInput);
 }
 
-function handleWordList(wordListValue, correctWordsValue, correctWordListValue, incorrectWordsValue, incorrectWordListValue){
-    if(wordListValue !== null) setWordList(wordListValue);
-    if(correctWordsValue !== null) setCorrectWords(correctWordsValue);
-    if(correctWordListValue !== null) setCorrectWordList(correctWordListValue);
-    if(incorrectWordsValue !== null) setIncorrectWords(incorrectWordsValue);
-    if(incorrectWordListValue !== null) setIncorrectWordList(incorrectWordListValue);
-}
-
-function handelCount(wordCountValue, correctCountValue, incorrectCountValue){
-    if(wordCountValue !== null) setWordCount(wordCountValue);
-    if(correctCountValue !== null) setCorrectWordCount(correctCountValue);
-    if(incorrectCountValue !== null) setIncorrectWordCount(incorrectCountValue);
+function resetCount(){
+    setWordCount('');
+    setCorrectWordCount('');
+    setIncorrectWordCount('');
 }

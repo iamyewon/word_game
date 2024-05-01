@@ -2,10 +2,10 @@ function handleInputWord(e){
     if(e.key === 'Enter'){
         if(word.textContent === wordInput.value.trim()){
             correctWordList.push(word.textContent);
-            // setCorrectWords(correctwords.textContent + `${word.textContent}  `);
             correctWords.textContent += `${word.textContent}  `;
+            // setText(correctWords, correctWords.textContent + `${word.textContent}  `);
             correctCount.textContent = `(${correctWordList.length})`;
-            handleCorrectWord(word.textContent);
+            setCorrectWord(word.textContent);
             word.textContent = wordList[0];
             wordCount.textContent -= 1;
         }else{
@@ -18,6 +18,11 @@ function handleInputWord(e){
 }
 
 
-function handleCorrectWord(correctWord){
+function setCorrectWord(correctWord){
     wordList = wordList.filter((value) => value !== correctWord);
 }
+
+// setText = (element, value) => {
+//     element.textContent = value;
+
+// }

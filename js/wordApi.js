@@ -1,11 +1,9 @@
-function fetchData(){
+async function fetchData(){
     displayLoading();
-    axios.get(`https://random-word-api.herokuapp.com/word?number=${WORD_COUNT}`)
+    return axios.get(`https://random-word-api.herokuapp.com/word?number=${WORD_COUNT}`)
     .then((response) => {
-        wordList = response.data;
-        wordCount.textContent = WORD_COUNT;
-        word.textContent = wordList[0];
-        handleTimer();
-        hideLoading();
-    }).catch(console.error);
+        return response;
+    })
+    .catch(() => alert('데이터를 불러오지 못했습니다.'))
+    .finally(hideLoading);
 }

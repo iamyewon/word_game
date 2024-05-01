@@ -74,7 +74,10 @@ function setIncorrectWordCount(incorrectCountValue){
 }
 
 
-// 실행은 main.js로 ?
+// window.onload = () => {
+//     fetchData();
+// }
+
 resetButton.value = setBtnValue();
 
 wordInput.addEventListener('keyup', (e) => handleInputWord(e));
@@ -83,3 +86,9 @@ resetButton.addEventListener("click", () => {
     isEndGame ? startGame() : resetGame();
     resetButton.value = setBtnValue();
 })
+  
+
+
+
+
+
