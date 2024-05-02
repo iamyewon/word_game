@@ -4,6 +4,13 @@
  */
 function endGame(){
     clearTimer();
+    // const obj = {
+    //     wordTitleValue : '', 
+    //     wordValue : 'Game Over', 
+    //     timeValue : `Time's Up!`, 
+    //     wordInputValue : '', 
+    //     isDisabledWordInput : true
+    // }
     handleBasicSetting('', 'Game Over', `Time's Up!`, '', true);
     setEndGame(true);
     wordBox.classList.add('transparent');
