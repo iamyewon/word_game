@@ -74,10 +74,6 @@ function setIncorrectWordCount(incorrectCountValue){
 }
 
 
-// window.onload = () => {
-//     fetchData();
-// }
-
 resetButton.value = setBtnValue();
 
 wordInput.addEventListener('keyup', (e) => handleInputWord(e));

@@ -1,5 +1,12 @@
 let timer;
 
+/**
+ * 타이머 함수
+ * @author 웹팀 김예원 2024-05-02
+ * @description 정해진 시간을 1초씩 줄이는 타이머, 
+ * 5초 이하시 border color를 red로 변경, 
+ * 0초가 되면 타이머 종료
+ */
 function handleTimer(){
     let limitTime = LIMIT_TIME;
     setTime(`${limitTime}초`);
