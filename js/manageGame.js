@@ -95,7 +95,7 @@ function resetCount(){
  * @param {string} wordValue 제시어
  * @param {string} timeValue 제한시간
  * @param {string} wordInputValue 사용자 입력 칸
- * @param {boolean} isDisabledWordInput 사용자 입력 칸 막을지 여부
+ * @param {boolean} isDisabledWordInput 사용자 입력 칸 비활성화 여부
  */
 function handleBasicSetting(wordTitleValue, wordValue, timeValue, wordInputValue, isDisabledWordInput){
     if(wordTitleValue !== null) setWordTitle(wordTitleValue);

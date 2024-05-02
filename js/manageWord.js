@@ -5,12 +5,12 @@
  * @description 입력한 단어가 정답 or 오답일 때 각각 처리 
  *  
  */
-function handleInputWord(e){
+function handleInputWord(e){ // TODO : 코드 정리 예정 
     if(e.key === 'Enter'){
         if(word.textContent === wordInput.value.trim()){
             correctWordList.push(word.textContent);
             correctWords.textContent += `${word.textContent}  `;
-            // setText(correctWords, correctWords.textContent + `${word.textContent}  `);
+            // setText(correctWords, correctWords.textContent + `${word.textContent}  `); 
             correctCount.textContent = `(${correctWordList.length})`;
             setCorrectWord(word.textContent);
             word.textContent = wordList[0];
