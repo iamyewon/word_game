@@ -5,7 +5,7 @@
  * @description 입력한 단어가 정답 or 오답일 때 각각 처리 
  *  
  */
-const handleInputWord = (e, type) =>{ // TODO : 코드 정리 예정 
+const handleInputWord = (e) =>{ // TODO : 코드 정리 예정 
     if(e.key === 'Enter'){
         if(word.textContent === wordInput.value.trim()){
             correctWordList.push(word.textContent);

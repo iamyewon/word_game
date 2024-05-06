@@ -27,11 +27,8 @@ window.onload = () => {
     resetButton.value = setBtnValue();
 
     wordInput.addEventListener('keyup', (e) => handleInputWord(e));
-    
-    resetButton.addEventListener("click", () => {
-        isEndGame ? startGame() : resetGame();
-        resetButton.value = setBtnValue();
-    })
+
+    resetButton.addEventListener("click", () => clickBtn());
 }
 
 

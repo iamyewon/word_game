@@ -1,8 +1,12 @@
+
 /**
  * 타임오버로 게임이 종료 될 때
  * @author 웹팀 김예원 2024-05-02
  */
+
+//전역
 function endGame(){
+    // endGame스코프
     clearTimer();
     // const obj = {
     //     wordTitleValue : '', 
@@ -33,20 +37,38 @@ function resetGame(){
  * @author 웹팀 김예원 2024-05-02
  * @description 게임 시작 시 API 호출하고 단어를 받아와서 진행함
  */
-async function startGame(){
+function startGame(){
     resetList();
     handleBasicSetting('제시어', null, null, null, false);
     resetCount();
     
-    const result = await fetchData();
-    if(!result){
-        return;
+    function debounce(func, timeout = 1000) {
+        let debounceTimer;
+    
+        return function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                func();
+            }, timeout);
+        };
     }
+
+    // let result;
+    // debounce(() => { 
+        // fetchData()
+        // .then((response) => {
+        //     result = response;
+        // })
+    // });
+    // const result = await fetchData();
+    // if(!result){
+    //     return;
+    // }
     setWordList(result.data);
     setWordCount(WORD_COUNT);
     setWord(wordList[0]);
     handleTimer();    
-    setEndGame(false);
+    // setEndGame(false);
     wordBox.classList.remove('transparent');
 }
 
@@ -112,3 +134,29 @@ function handleBasicSetting(wordTitleValue, wordValue, timeValue, wordInputValue
     if(isDisabledWordInput !== null) setWordInputDisabled(isDisabledWordInput);
 }
 
+
+
+
+// 버튼 중복 클릭 방지(디바운싱)
+function debounce(func, timeout = 1000) {
+    let debounceTimer;
+    console.log('debounceTimer >>', debounceTimer);
+
+    if (!debounceTimer) {
+        console.log("11111 > ",debounceTimer);
+        func();
+    }
+    console.log("22222 > ",debounceTimer);
+    clearTimeout(debounceTimer);
+
+    debounceTimer = setTimeout(() => {
+        console.log("33333 > ",debounceTimer);
+        debounceTimer = undefined;
+    }, timeout);
+}
+
+
+const clickBtn = () => {
+    isEndGame ? startGame() : resetGame();
+    resetButton.value = setBtnValue();
+}
