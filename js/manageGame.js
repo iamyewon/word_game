@@ -32,6 +32,7 @@ function resetGame(){
     setEndGame(true);
 }
 
+
 /**
  * 게임을 시작할 때
  * @author 웹팀 김예원 2024-05-02
@@ -41,29 +42,11 @@ function startGame(){
     resetList();
     handleBasicSetting('제시어', null, null, null, false);
     resetCount();
-    
-    function debounce(func, timeout = 1000) {
-        let debounceTimer;
-    
-        return function() {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                func();
-            }, timeout);
-        };
-    }
+    debounce(fetchData, 1000); // 디바운싱이 모두 끝나면 testFunc가 호출되어야함 
+    // testFunc(); 여기서 호출하면 wordList[0] 이 없다?는 에러가 나옴 
+}
 
-    // let result;
-    // debounce(() => { 
-        // fetchData()
-        // .then((response) => {
-        //     result = response;
-        // })
-    // });
-    // const result = await fetchData();
-    // if(!result){
-    //     return;
-    // }
+function testFunc(){
     setWordList(result.data);
     setWordCount(WORD_COUNT);
     setWord(wordList[0]);
@@ -137,21 +120,23 @@ function handleBasicSetting(wordTitleValue, wordValue, timeValue, wordInputValue
 
 
 
+let result;
+
 // 버튼 중복 클릭 방지(디바운싱)
 function debounce(func, timeout = 1000) {
     let debounceTimer;
-    console.log('debounceTimer >>', debounceTimer);
-
+    console.log(!!debounceTimer);
+    // return (...args) => {}
     if (!debounceTimer) {
-        console.log("11111 > ",debounceTimer);
-        func();
+        result = func();
+        console.log(!!debounceTimer, ">>>>");
     }
-    console.log("22222 > ",debounceTimer);
     clearTimeout(debounceTimer);
-
+    console.log(!!debounceTimer);
+    
     debounceTimer = setTimeout(() => {
-        console.log("33333 > ",debounceTimer);
         debounceTimer = undefined;
+        console.log(!!debounceTimer, ">>>>");
     }, timeout);
 }
 

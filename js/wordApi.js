@@ -4,18 +4,17 @@
  * @returns {Object}
  * 
  */
-function fetchData2(){
+function fetchData(){
     // displayLoading();
     return axios.get(`https://random-word-api.herokuapp.com/word?number=${WORD_COUNT}`)
     .then((response) => {
-        console.log(response);
         setEndGame(false);
+        clearTimeout(debounceTimer);
+        testFunc();
         return response;
     })
     .catch(() => alert('데이터를 불러오지 못했습니다.'))
     // .finally(hideLoading);
 }
 
-function fetchData() {
-    console.log('hhh')
-}
+// testFunc가 여기서 호출되면 catch에 걸림 
