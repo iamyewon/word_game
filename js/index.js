@@ -28,7 +28,9 @@ window.onload = () => {
 
     wordInput.addEventListener('keyup', (e) => handleInputWord(e));
 
-    resetButton.addEventListener("click", () => clickBtn());
+    // resetButton.addEventListener("click", () => clickBtn()); // 기존 
+    resetButton.addEventListener("click", debouceCall);
+    // resetButton.addEventListener("click", () => debounce(clickBtn, 300)); // 안됨 
 }
 
 

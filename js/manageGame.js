@@ -32,7 +32,6 @@ function resetGame(){
     setEndGame(true);
 }
 
-
 /**
  * 게임을 시작할 때
  * @author 웹팀 김예원 2024-05-02
@@ -42,12 +41,12 @@ function startGame(){
     resetList();
     handleBasicSetting('제시어', null, null, null, false);
     resetCount();
-    debounce(fetchData, 1000); // 디바운싱이 모두 끝나면 testFunc가 호출되어야함 
-    // testFunc(); 여기서 호출하면 wordList[0] 이 없다?는 에러가 나옴 
+    fetchData();
 }
 
-function testFunc(){
-    setWordList(result.data);
+function testFunc(responseData){
+    // setWordList(result.data);
+    setWordList(responseData);
     setWordCount(WORD_COUNT);
     setWord(wordList[0]);
     handleTimer();    
@@ -121,27 +120,51 @@ function handleBasicSetting(wordTitleValue, wordValue, timeValue, wordInputValue
 
 
 let result;
+let debounceTimer;
 
-// 버튼 중복 클릭 방지(디바운싱)
-function debounce(func, timeout = 1000) {
-    let debounceTimer;
-    console.log(!!debounceTimer);
-    // return (...args) => {}
-    if (!debounceTimer) {
-        result = func();
-        console.log(!!debounceTimer, ">>>>");
-    }
-    clearTimeout(debounceTimer);
-    console.log(!!debounceTimer);
+
+const debounce = (fn, delay, option = { leading: false, trailing: true}) => {
+    console.log('call');
+    let isLeadingInvoked = false;
     
-    debounceTimer = setTimeout(() => {
-        debounceTimer = undefined;
-        console.log(!!debounceTimer, ">>>>");
-    }, timeout);
-}
+    // if(!isEndGame){ //isEndGame not defined 
+    //     fn();
+    //     return;
+    // }
+
+    return function (...args) {
+      const context = this; // ????
+      
+      // base condition
+      if(debounceTimer){
+        clearTimeout(debounceTimer);
+      }
+      
+      // handle leading
+      if(option.leading && !debounceTimer){
+        fn.apply(context, args);
+        isLeadingInvoked = true;
+      }else{
+        isLeadingInvoked = false;
+      }
+      
+      // handle trailing
+      debounceTimer = setTimeout(() => {
+        if(option.trailing && !isLeadingInvoked){
+          fn.apply(context, args);
+        }
+        
+        debounceTimer = null;
+      }, delay);
+    }
+  }
 
 
 const clickBtn = () => {
     isEndGame ? startGame() : resetGame();
     resetButton.value = setBtnValue();
 }
+
+// const debouceCall = !isEndGame ? clickBtn : debounce(clickBtn, 1000);
+const debouceCall = debounce(clickBtn, 300);
+// onClick에 debounce 바로 호출하니까 
