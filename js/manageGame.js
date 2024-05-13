@@ -28,6 +28,7 @@ function resetGame(){
     resetList();
     resetCount();
     setEndGame(true);
+    console.log("reset");
 }
 
 /**
@@ -116,64 +117,20 @@ function handleBasicSetting(wordTitleValue, wordValue, timeValue, wordInputValue
 
 let debounceTimer;
 
-//hoc
-const debounce = (fn, delay, option = { leading: false, trailing: true}) => {
-    console.log('call');
-    let isLeadingInvoked = false;
-    
-    // if(!isEndGame){ //isEndGame not defined 
-    //     fn();
-    //     return;
-    // }
-
-    return function (...args) {
-      const context = this; // ????
-      
-      // base conditqqion
-      if(debounceTimer){
-        clearTimeout(debounceTimer);
-      }
-      
-      // handle leading
-      if(option.leading && !debounceTimer){
-        fn.apply(context, args);
-        isLeadingInvoked = true;
-      }else{
-        isLeadingInvoked = false;
-      }
-      
-      // handle trailing
-      debounceTimer = setTimeout(() => {
-        if(option.trailing && !isLeadingInvoked){
-          fn.apply(context, args);
-        }
-        
-        debounceTimer = null;
-      }, delay);
-    }
-  }
-
-
 const clickBtn = () => {
-    isEndGame ? startGame() : resetGame();
+    console.log(debounceTimer);
+
+    if(debounceTimer){
+        clearTimeout(debounceTimer);
+    }
+    
+    if(isEndGame){
+        debounceTimer = setTimeout(() => {
+        startGame();
+        }, 1000);
+    }else{
+        resetGame();
+    }
+
     resetButton.value = setBtnValue();
-}
-
-// const debouceCall = !isEndGame ? clickBtn : debounce(clickBtn, 1000);
-const debouceCall = debounce(clickBtn, 300);
-// onClick에 debounce 바로 호출하니까 
-
-
-let abab;
-
-const debounceCall1 = () => {
-  console.log(abab);
-  
-  clearTimeout(abab);
-
-  if(isEndGame){
-    abab = setTimeout(() => {
-      startGame();
-    }, 1000);
-  }
 }
