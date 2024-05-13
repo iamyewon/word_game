@@ -3,8 +3,6 @@
  * 타임오버로 게임이 종료 될 때
  * @author 웹팀 김예원 2024-05-02
  */
-
-//전역
 function endGame(){
     // endGame스코프
     clearTimer();
@@ -44,13 +42,12 @@ function startGame(){
     fetchData();
 }
 
-function testFunc(responseData){
-    // setWordList(result.data);
+function afterFetch(responseData){
     setWordList(responseData);
     setWordCount(WORD_COUNT);
     setWord(wordList[0]);
     handleTimer();    
-    // setEndGame(false);
+    setEndGame(false);
     wordBox.classList.remove('transparent');
 }
 
@@ -117,12 +114,9 @@ function handleBasicSetting(wordTitleValue, wordValue, timeValue, wordInputValue
 }
 
 
-
-
-let result;
 let debounceTimer;
 
-
+//hoc
 const debounce = (fn, delay, option = { leading: false, trailing: true}) => {
     console.log('call');
     let isLeadingInvoked = false;
@@ -135,7 +129,7 @@ const debounce = (fn, delay, option = { leading: false, trailing: true}) => {
     return function (...args) {
       const context = this; // ????
       
-      // base condition
+      // base conditqqion
       if(debounceTimer){
         clearTimeout(debounceTimer);
       }
@@ -168,3 +162,18 @@ const clickBtn = () => {
 // const debouceCall = !isEndGame ? clickBtn : debounce(clickBtn, 1000);
 const debouceCall = debounce(clickBtn, 300);
 // onClick에 debounce 바로 호출하니까 
+
+
+let abab;
+
+const debounceCall1 = () => {
+  console.log(abab);
+  
+  clearTimeout(abab);
+
+  if(isEndGame){
+    abab = setTimeout(() => {
+      startGame();
+    }, 1000);
+  }
+}

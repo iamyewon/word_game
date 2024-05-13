@@ -25,18 +25,15 @@ const loader = document.querySelector('.loader');
 
 window.onload = () => {
     resetButton.value = setBtnValue();
-
     wordInput.addEventListener('keyup', (e) => handleInputWord(e));
-
     // resetButton.addEventListener("click", () => clickBtn()); // 기존 
-    resetButton.addEventListener("click", debouceCall);
+    // resetButton.addEventListener("click", debouceCall); 
     // resetButton.addEventListener("click", () => debounce(clickBtn, 300)); // 안됨 
+    resetButton.addEventListener("click", debounceCall1);
 }
 
-
-  
-
-
+// keyup 말고 버튼 하나 만들어서 click으로도 
+// manageWord 10-23번째 줄 모듈화 
 
 
 

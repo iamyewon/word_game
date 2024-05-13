@@ -33,7 +33,9 @@ function setCorrectWord(correctWord){
     wordList = wordList.filter((value) => value !== correctWord);
 }
 
+
+
+
 // setText = (element, value) => {
 //     element.textContent = value;
-
 // }
