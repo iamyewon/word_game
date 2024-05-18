@@ -5,8 +5,6 @@ let correctWordList = [];
 let incorrectWordList = [];
 const LIMIT_TIME = 20;
 
-// let word; 
-
 const wordCount = document.querySelector('.word-count');
 const word = document.querySelector('.word');
 const wordBox = document.querySelector('.word-box');
@@ -21,19 +19,12 @@ const incorrectCount = document.querySelector('.incorrect-count');
 const resetButton = document.querySelector('.reset-button');
 const loadingBackground = document.querySelector('.loading-background');
 const loader = document.querySelector('.loader');
+const enterBtn = document.querySelector('.enter-btn');
 
 
 window.onload = () => {
     resetButton.value = setBtnValue();
-    wordInput.addEventListener('keyup', (e) => handleInputWord(e));
-    // resetButton.addEventListener("click", () => clickBtn()); // 기존 
-    // resetButton.addEventListener("click", debouceCall); 
-    // resetButton.addEventListener("click", () => debounce(clickBtn, 300)); // 안됨 
-    resetButton.addEventListener("click", debounceCall1);
+    wordInput.addEventListener('keyup', handleInputWord);
+    enterBtn.addEventListener('click', handleInputWord);
+    resetButton.addEventListener("click", clickBtn);
 }
-
-// keyup 말고 버튼 하나 만들어서 click으로도 
-// manageWord 10-23번째 줄 모듈화 
-
-
-

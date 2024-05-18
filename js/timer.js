@@ -7,7 +7,7 @@ let timer;
  * 5초 이하시 border color를 red로 변경, 
  * 0초가 되면 타이머 종료
  */
-function handleTimer(){
+const handleTimer = () => {
     let limitTime = LIMIT_TIME;
     setTime(`${limitTime}초`);
     timer = setInterval(() => {

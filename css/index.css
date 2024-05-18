@@ -15,6 +15,10 @@ body{
     background-repeat: no-repeat;
 }
 
+button{
+    cursor: pointer;
+}
+
 /* container */
 .container{
     width: 940px;
@@ -126,6 +130,11 @@ body{
 }
 
 /* word-input */
+
+.word-input-container{
+    position: relative;
+}
+
 .word-input{
     width: 100%;
     height: 80px;
@@ -141,6 +150,22 @@ body{
 
 .word-input:focus{
     border: solid 2px #b8b2f2;
+}
+
+.enter-btn{
+    width: 120px;
+    height: 60px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #e9ebf7;
+    position: absolute;
+    right: -130px;
+    bottom: 12px;
+    font-size: 18px;
+}
+
+.enter-btn:hover{
+    background-color: #cbd1f0;
 }
 
 /* word-result */
